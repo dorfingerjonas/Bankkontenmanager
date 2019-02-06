@@ -1,6 +1,6 @@
-const BankKonto = require('./bankKonto');
+const Bankkonto = require('./bankkonto');
 
-class Sparkonto extends BankKonto {
+class Sparkonto extends Bankkonto {
     constructor(name, zinsSatz, anfangsBestand) {
         super(name, anfangsBestand);
         this.zinsSatz = zinsSatz;
