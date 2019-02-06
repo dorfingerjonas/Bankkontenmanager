@@ -1,13 +1,28 @@
 class Bankkonto {
-    constructor(...params) {
-        if (params.length > 2) {
-            console.log('Too many params!');
-        } else if (params.length === 1) {
-            this.params[0] = name;
-        } else {
-            this.params[0] = name;
-            this.params[1] = anfangsBestand;
-        }
+
+    constructor (name, anfangsBestand) {
+        this._name = name;
+        this._kontoStand = anfangsBestand || 0;
+    }
+
+    getName() {
+        return this._name;
+    }
+
+    setName(name) {
+        this._name = name;
+    }
+
+    getKontoStand() {
+        return this._kontoStand;
+    }
+
+    einzahlen(betrag) {
+        this._kontoStand += betrag;
+    }
+
+    abheben(betrag) {
+        this._kontoStand -= betrag;
     }
 }
 
