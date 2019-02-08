@@ -85,8 +85,10 @@ function schreibeKontostandInDatei(filename) {
 
         if (konto instanceof SparKonto) {
             konto.zinsenAnrechnen(ZINSSATZ);
+            content += konto.getName() + ";Sparkonto;" + konto.getKontoStand() + "\n";
+        } else {
+            content += konto.getName() + ";Girokonto;" + konto.getKontoStand() + "\n";
         }
-        content += konto.getName() + ";" + konto.getKontoStand() + "\n";
     }
 
     fs.writeFile(filename, content, (err) => {
