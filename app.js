@@ -14,12 +14,11 @@ const ERGEBNISDATEI = 'ergebnis.csv';
 let konten = [];
 
 erstelleKonten(KONTENDATEI);
-fuehreBuchungenDurch(BUCHUNGSDATEI);
-schreibeKontostandInDatei(ERGEBNISDATEI);
 
 function erstelleKonten(filename) {
 
     fs.readFile(filename, {encoding: 'utf8'}, (err, data) => {
+
         if (err) {
             console.error(err.message);
         } else {
@@ -36,11 +35,13 @@ function erstelleKonten(filename) {
                 if (konto === "Girokonto") {
                     konten.push(new GiroKonto(name, GEBUEHR, anfangsBetrag));
                 } else if (konto === "Sparkonto") {
-                    konten[0] = new SparKonto(name, ZINSSATZ, anfangsBetrag);
+                    konten.push(new SparKonto(name, ZINSSATZ, anfangsBetrag));
                 }
             }
+            console.log(konten);
         }
-    });
+    fuehreBuchungenDurch(BUCHUNGSDATEI);
+});
 }
 
 function fuehreBuchungenDurch(filename) {
@@ -63,7 +64,8 @@ function fuehreBuchungenDurch(filename) {
                 findKonto(to).einzahlen(howMuch);
             }
         }
-    });
+    schreibeKontostandInDatei(ERGEBNISDATEI);
+});
 }
 
 function findKonto(name) {
@@ -84,7 +86,7 @@ function schreibeKontostandInDatei(filename) {
         if (konto instanceof SparKonto) {
             konto.zinsenAnrechnen(ZINSSATZ);
         }
-        content += konto + "\n";
+        content += konto.getName() + ";" + konto.getKontoStand() + "\n";
     }
 
     fs.writeFile(filename, content, (err) => {
